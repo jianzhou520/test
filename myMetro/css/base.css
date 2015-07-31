@@ -1,0 +1,113 @@
+/*全局样式*/
+body{
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	min-height: 440px;
+	cursor: default;
+}
+
+/*dock底栏的样式*/
+#dock{
+	width: 50%; 
+	height: 50px;
+    overflow-x: auto; 
+    background: black;
+    position: fixed;
+    bottom: 10px;
+    color: white;
+    margin-left: 24%;
+    opacity: 0.6;
+}
+
+/*定义的分页栏*/
+#pageNation{
+	cursor: pointer;
+	clear: both;	
+	width: 100%;
+	position: relative;
+	padding: 10px 5px;
+	margin: 20px auto;
+	text-align: center;
+	margin-top: 20px;
+}
+
+#pageNation .item{
+	background: #888888;
+	width: 60px;
+	height: 6px;
+	display: inline-block;
+	margin-left: 5px;
+	border-radius: 5px;
+}
+
+#pageNation .item.active{	
+	background: #F5F5F5;
+}
+
+#pageNation .item:hover{
+	background: #F5F5F5;
+}
+
+/* 自定义的横向滚动条*/
+#bar{
+	position: fixed;
+	bottom: 0;
+	height: 12px;
+	background: white;
+	opacity: 0.6;
+	cursor: default;
+}
+
+#bar:hover{
+	opacity: 0.8;
+}
+
+
+.dock-item{
+	width: 46px;
+	height: 46px;
+	margin: 2px;
+	float: left;
+	border: none;
+	cursor: pointer;
+}
+
+.dock-item:hover{
+	border: white solid 2px;
+}
+
+
+/*稍特有样式*/
+div.tile-group{
+	overflow: hidden;
+	max-height: 540px;
+	width: auto;
+	min-width: 0;
+	position: absolute;
+	display: none;
+}
+
+div.tile-group div.tile-container{
+	left: 0px;
+}
+
+div.tile-group.active{
+	display: block;
+}
+
+div.small-container{
+	display: block;
+	float: left;
+	width: 160px;
+	height: 160px;
+	/*position: relative;*/
+	margin: 0;
+}
+
+div.wide-container{
+	display: inline-block;
+	width: 320px;
+	height: 160px;
+}
+

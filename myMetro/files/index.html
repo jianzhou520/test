@@ -1,0 +1,607 @@
+<!DOCTYPE HTML>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Metro, a sleek, intuitive, and powerful framework for faster and easier web development for Windows Metro Style.">
+    <meta name="keywords" content="HTML, CSS, JS, JavaScript, framework, metro, front-end, frontend, web development">
+
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
+    <title>欢迎访问</title>
+
+    <link href="../css/metro.css" rel="stylesheet">
+    <link href="../css/metro-icons.css" rel="stylesheet">
+    <link href="../css/themes/metro/easyui.css" rel="stylesheet">
+    <link href="../css/themes/icon.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+
+    <script src="../js/jquery.min.js" type="text/JavaScript"></script>
+    <script src="../js/metro.js" type="text/javascript"></script>
+    <script src="../js/jquery.easyui.min.js" type="text/javascript"></script>
+    <script src="../js/click.js" type="text/javascript"></script>
+    <style>
+        .tile-area-controls {
+            position: fixed;
+            right: 40px;
+            top: 40px;        
+        }
+		
+        .tile-group {
+            left: 100px;
+        }
+
+        .tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super {
+            opacity: 0;
+            -webkit-transform: scale(.8);
+            transform: scale(.8);
+        }
+
+        .charm.right-side {
+            width: 300px;
+            right: -300px;
+        }
+
+        #charmSettings .button {
+            margin: 5px;
+        }
+
+        @media screen and (max-width: 640px) {
+            .tile-area {
+                overflow-y: scroll;
+            }
+            .tile-area-controls {
+                display: none;
+            }
+        }
+
+        @media screen and (max-width: 320px) {
+            .tile-area {
+                overflow-y: scroll;
+            }
+
+            .tile-area-controls {
+                display: none;
+            }
+
+        }
+
+        .tile-area{
+        	background-image: url("../img/bg.jpg");
+        	background-attachment: fixed;
+            -moz-background-attachement: fixed;
+            -webkit-background-attachement: fixed;
+            -ms-background-attachement: fixed;
+            -o-background-attachement: fixed;
+            background-size: 100% 100%;
+        	color: white;
+        }
+
+        .panel-title{
+            color: white;
+        }
+    </style>
+
+    <script>
+
+        /*
+         * Do not use this is a google analytics fro Metro UI CSS
+         * */
+        if (window.location.hostname !== 'localhost') {
+
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','../js/analytics.js','ga');
+
+            ga('create', 'UA-58849249-3', 'auto');
+            ga('send', 'pageview');
+
+        }
+
+    </script>
+
+    <script>
+        (function($) {
+            $.StartScreen = function(){
+                var plugin = this;
+                var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+
+                plugin.init = function(){
+                    setTilesAreaSize();
+                    if (width > 640) addMouseWheel();
+                };
+
+                var setTilesAreaSize = function(){
+                    var groups = $(".tile-group");
+                    var tileAreaWidth = 80;
+                    $.each(groups, function(i, t){
+                        if (width <= 640) {
+                            tileAreaWidth = width;
+                        } else {
+                            tileAreaWidth += $(t).outerWidth() + 80;
+                        }
+                    });
+                    $(".tile-area").css({
+                        width: tileAreaWidth
+                    });
+                };
+
+                var addMouseWheel = function (){
+                    $("body").mousewheel(function(event, delta, deltaX, deltaY){
+                        var page = $(document);
+                        var scroll_value = delta * 50;
+                        page.scrollLeft(page.scrollLeft() - scroll_value);
+                        return false;
+                    });
+                };
+
+                plugin.init();
+            }
+        })(jQuery);
+
+        $(function(){
+            $.StartScreen();
+
+            var tiles = $(".tile, .tile-small, .tile-sqaure, .tile-wide, .tile-large, .tile-big, .tile-super");
+
+            $.each(tiles, function(){
+                var tile = $(this);
+                setTimeout(function(){
+                    tile.css({
+                        opacity: 1,
+                        "-webkit-transform": "scale(1)",
+                        "transform": "scale(1)",
+                        "-webkit-transition": ".3s",
+                        "transition": ".3s"
+                    });
+                }, Math.floor(Math.random()*500));
+            });
+
+            $(".tile-group").animate({
+                left: 0
+            });
+        });
+        function showSearch(){
+            var  charm = $("#charmSearch");
+
+            if (charm.data('hidden') == undefined) {charm.data('hidden', true);}
+
+            if (!charm.data('hidden')) {
+
+                charm.animate({
+                    right: -300
+                });
+
+                charm.data('hidden', true);
+            } else {
+                charm.animate({
+                    right: 0
+                });
+                charm.data('hidden', false);
+            }
+        }
+
+        function showSettings(){
+            var  charm = $("#charmSettings");
+
+            if (charm.data('hidden') == undefined) {charm.data('hidden', true);}
+
+            if (!charm.data('hidden')) {
+
+                charm.animate({
+                    right: -300
+                });
+
+                charm.data('hidden', true);
+            } else {
+                charm.animate({
+                    right: 0
+                });
+                charm.data('hidden', false);
+            }
+        }
+
+        function setSearchPlace(el){
+            var a = $(el);
+            var text = a.text();
+            var toggle = a.parents('label').children('.dropdown-toggle');
+
+            toggle.text(text);
+        }
+
+        $(function(){
+            var current_tile_area_scheme = localStorage.getItem('tile-area-scheme') || "tile-area-scheme-dark";
+            $(".tile-area").removeClass (function (index, css) {
+                return (css.match (/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+            }).addClass(current_tile_area_scheme);
+
+            $(".schemeButtons .button").hover(
+                    function(){
+                        var b = $(this);
+                        var scheme = "tile-area-scheme-" +  b.data('scheme');
+                        $(".tile-area").removeClass (function (index, css) {
+                            return (css.match (/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                        }).addClass(scheme);
+                    },
+                    function(){
+                        $(".tile-area").removeClass (function (index, css) {
+                            return (css.match (/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                        }).addClass(current_tile_area_scheme);
+                    }
+            );
+
+            $(".schemeButtons .button").on("click", function(){
+                var b = $(this);
+                var scheme = "tile-area-scheme-" +  b.data('scheme');
+
+                $(".tile-area").removeClass (function (index, css) {
+                    return (css.match (/(^|\s)tile-area-scheme-\S+/g) || []).join(' ');
+                }).addClass(scheme);
+
+                current_tile_area_scheme = scheme;
+                localStorage.setItem('tile-area-scheme', scheme);
+
+                showSettings();
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <div class="charm right-side padding20 bg-grayDark" id="charmSearch">
+        <button class="square-button bg-transparent fg-white no-border place-right small-button" onclick="showSearch()">
+            <span class="mif-cross"></span>
+        </button>
+        <h1 class="text-light">搜索</h1>
+        <hr class="thin">
+        <br>
+        <div class="input-control text full-size">
+            <label>
+                <span class="dropdown-toggle drop-marker-light">Anywhere</span>
+                <ul class="d-menu" data-role="dropdown">
+                    <li><a onclick="setSearchPlace(this)">Anywhere</a></li>
+                    <li><a onclick="setSearchPlace(this)">Options</a></li>
+                    <li><a onclick="setSearchPlace(this)">Files</a></li>
+                    <li><a onclick="setSearchPlace(this)">Internet</a></li>
+                </ul>
+            </label>
+            <input type="text">
+            <button class="button"><span class="mif-search"></span></button>
+        </div>
+    </div>
+
+    <div class="charm right-side padding20 bg-grayDark" id="charmSettings">
+        <button class="square-button bg-transparent fg-white no-border place-right small-button" onclick="showSettings()">
+            <span class="mif-cross"></span>
+        </button>
+        <h1 class="text-light">设置</h1>
+        <hr class="thin">
+        <br>
+        <div class="schemeButtons">
+            <div class="button square-button tile-area-scheme-dark" data-scheme="dark"></div>
+            <div class="button square-button tile-area-scheme-darkBrown" data-scheme="darkBrown"></div>
+            <div class="button square-button tile-area-scheme-darkCrimson" data-scheme="darkCrimson"></div>
+            <div class="button square-button tile-area-scheme-darkViolet" data-scheme="darkViolet"></div>
+            <div class="button square-button tile-area-scheme-darkMagenta" data-scheme="darkMagenta"></div>
+            <div class="button square-button tile-area-scheme-darkCyan" data-scheme="darkCyan"></div>
+            <div class="button square-button tile-area-scheme-darkCobalt" data-scheme="darkCobalt"></div>
+            <div class="button square-button tile-area-scheme-darkTeal" data-scheme="darkTeal"></div>
+            <div class="button square-button tile-area-scheme-darkEmerald" data-scheme="darkEmerald"></div>
+            <div class="button square-button tile-area-scheme-darkGreen" data-scheme="darkGreen"></div>
+            <div class="button square-button tile-area-scheme-darkOrange" data-scheme="darkOrange"></div>
+            <div class="button square-button tile-area-scheme-darkRed" data-scheme="darkRed"></div>
+            <div class="button square-button tile-area-scheme-darkPink" data-scheme="darkPink"></div>
+            <div class="button square-button tile-area-scheme-darkIndigo" data-scheme="darkIndigo"></div>
+            <div class="button square-button tile-area-scheme-darkBlue" data-scheme="darkBlue"></div>
+            <div class="button square-button tile-area-scheme-lightBlue" data-scheme="lightBlue"></div>
+            <div class="button square-button tile-area-scheme-lightTeal" data-scheme="lightTeal"></div>
+            <div class="button square-button tile-area-scheme-lightOlive" data-scheme="lightOlive"></div>
+            <div class="button square-button tile-area-scheme-lightOrange" data-scheme="lightOrange"></div>
+            <div class="button square-button tile-area-scheme-lightPink" data-scheme="lightPink"></div>
+            <div class="button square-button tile-area-scheme-grayed" data-scheme="grayed"></div>
+        </div>
+    </div>
+
+    <div class="tile-area">
+        <h1 class="tile-area-title">开始</h1>
+        <div class="tile-area-controls">
+            <button class="image-button icon-right bg-transparent fg-white bg-hover-dark no-border">
+                <span class="sub-header no-margin text-light">未登录</span> 
+                <span class="icon mif-user"></span>
+            </button>
+            <button class="square-button bg-transparent fg-white bg-hover-dark no-border" onclick="showSearch()">
+                <span class="mif-search"></span>
+            </button>
+            <button class="square-button bg-transparent fg-white bg-hover-dark no-border" onclick="showSettings()">
+                <span class="mif-cog"></span>
+            </button>
+            <a href="../tiles.html" class="square-button bg-transparent fg-white bg-hover-dark no-border">
+                <span class="mif-switch"></span>
+            </a>
+        </div>
+        <!-- 分页栏 -->
+        <div id="pageNation">
+            <div class="item active"></div>
+            <div class="item"></div>
+        </div>
+        <div style="left: 0px;" class="tile-group double active">
+            <span class="tile-group-title">通用</span>
+
+            <div class="tile-container">
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-indigo fg-white" 
+                    data-role="tile" id="calendarTag">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-calendar"></span>
+                    </div>
+                    <span class="tile-label">日历</span>
+                </div>
+
+
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-darkBlue fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-envelop"></span>
+                    </div>
+                    <span class="tile-label">收件箱</span>
+                </div>
+
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-wide bg-teal fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-pencil"></span>
+                    </div>
+                    <span class="tile-label">Editor</span>
+                </div>
+
+                <div class="small-container">
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-red fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-green fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>                    
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-blue fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-gray fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+
+                <div class="small-container">
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>                    
+                </div>
+				
+            </div>
+        </div>
+
+        
+
+        <div style="left: 0px;" class="tile-group double">
+            <span class="tile-group-title">生活</span>
+
+            <div class="tile-container">
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-indigo fg-white" 
+                    data-role="tile" id="calendarTag">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-calendar"></span>
+                    </div>
+                    <span class="tile-label">日历</span>
+                </div>
+
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-darkBlue fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-envelop"></span>
+                    </div>
+                    <span class="tile-label">收件箱</span>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-wide bg-teal fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-pencil"></span>
+                    </div>
+                    <span class="tile-label">Editor</span>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-darkGreen fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-shopping-basket"></span>
+                    </div>
+                    <span class="tile-label">Store</span>
+                </div>
+                
+                <div class="small-container">
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                    <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile-small bg-cyan fg-white" 
+                        data-role="tile">
+                        <div class="tile-content iconic">
+                            <span class="icon mif-skype"></span>
+                        </div>
+                        <div class="tile-label">Skype</div>
+                    </div>
+                </div>
+                
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+                <div style="opacity: 1; transform: scale(1); transition: all 0.3s ease 0s;" class="tile bg-cyan fg-white" 
+                    data-role="tile">
+                    <div class="tile-content iconic">
+                        <span class="icon mif-skype"></span>
+                    </div>
+                    <div class="tile-label">Skype</div>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+	
+    
+
+
+    <div id="dock"></div>
+    <div id="bar"></div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+            //默认当前是第一页显示中
+            $("html").data("currentPage", "1");
+            $("div.tile-group").each(function(index){
+                $this = $(this);
+                var small = $this.find("div.tile-small").length;
+                var wide = $this.find("div.tile-wide").length;
+                var normal = $this.find("div.tile").length;
+                //总块数来计算每个group的宽度
+                var num = wide + small / 8 + normal / 2;
+                $this.width(Math.ceil(num / 3) * 320);
+                //计算最小宽度，最小宽度是个group以最小宽度呈现时的所有group宽度和期间的margin之和
+            });
+            //将文档的宽高存到html
+            $('html').data('oldDocWidth', document.body.clientWidth);
+            $('html').data('oldDocHeight', document.body.clientHeight);
+            window.onresize = window.ClickJS.doResize;            
+            window.ClickJS.createWindow();
+            window.ClickJS.fireResize();
+            window.ClickJS.barDrag();
+            window.ClickJS.clickPageNation();
+        });
+
+	</script>
+
+
+</body>
+</html>
